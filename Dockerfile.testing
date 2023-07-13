@@ -1,0 +1,26 @@
+FROM python:3.11
+
+LABEL maintainer="Tim Daley <timdaley@earthling.net>"
+LABEL description="Test image for discoverable-tph-280 module"
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y apt-utils ca-certificates && \
+		update-ca-certificates && \
+		rm -fr /tmp/* /var/lib/apt/lists/* && \
+    pip cache purge
+
+# Keep from having to reinstall all the dependencies every time we
+# rebuild
+
+RUN mkdir /data && \
+  mkdir /config
+
+COPY requirements.txt  /data/
+COPY dist/*.whl /data/
+RUN pip install --no-cache-dir -r /data/requirements.txt
+
+RUN pip install --no-cache-dir /data/*.whl
+
+USER nobody
+
+CMD ["bash", "-l"]
