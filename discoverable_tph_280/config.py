@@ -1,40 +1,39 @@
+""" Configuration files """
 from __future__ import annotations
 from os.path import isfile, exists, dirname, abspath
 from os import environ
-import os
-import io
-import yaml
-import json
-from typing import Optional, List
-from pydantic import BaseModel, PositiveInt
+from pydantic import BaseModel
 from pydantic_yaml import YamlModel
 from .util import logger
 
+
 class MQTT(BaseModel):
-    host:str = "hastings.attlocal.net"
-    username:str = "homeassistant"
-    password:str = ""
-    discovery_prefix:str = "homeassistant"
-    state_prefix:str = "hmd"
+    host: str = "hastings.attlocal.net"
+    username: str = "homeassistant"
+    password: str = ""
+    discovery_prefix: str = "homeassistant"
+    state_prefix: str = "hmd"
+
 
 class GPIO(BaseModel):
-    port:int = 1
-    address:int = 0x76
+    port: int = 1
+    address: int = 0x76
+
 
 class Config(YamlModel):
-    mqtt_broker:MQTT = MQTT()
-    gpio:GPIO = GPIO()
+    mqtt_broker: MQTT = MQTT()
+    gpio: GPIO = GPIO()
 
     @staticmethod
     def _readfile(filepath) -> Config:
         config_file = abspath(filepath)
-        logger.debug(f'importing logfile from file: {config_file}')
-        with open(config_file, 'r', encoding='utf-8') as f:
-            return Config.parse_raw(f.read(), proto='yaml')
+        logger.debug(f"importing logfile from file: {config_file}")
+        with open(config_file, "r", encoding="utf-8") as f:
+            return Config.parse_raw(f.read(), proto="yaml")
 
     @staticmethod
-    def _config(filepath:str = None, string:str = None) -> Config:
-        config:Config = None
+    def _config(filepath: str = None, string: str = None) -> Config:
+        config: Config = None
         if string:
             logger.debug("importing logfile from string")
             config = Config.parse_raw(string)
@@ -43,11 +42,11 @@ class Config(YamlModel):
                 config = Config._readfile(filepath)
             raise FileNotFoundError(filepath)
         else:
-            config_file = abspath('.config.yaml')
+            config_file = abspath(".config.yaml")
             if isfile(config_file) and exists(config_file):
                 config = Config._readfile(config_file)
             else:
-                config_file = abspath(dirname(__file__) + '/.config.yaml')
+                config_file = abspath(dirname(__file__) + "/.config.yaml")
                 if isfile(config_file) and exists(config_file):
                     config = Config._readfile(config_file)
                 else:
@@ -56,22 +55,10 @@ class Config(YamlModel):
 
     @staticmethod
     def config() -> Config:
-        config_filepath:str = None
-        if 'config' in environ:
-            config_filepath = environ['config']
+        config_filepath: str = None
+        if "config" in environ:
+            config_filepath = environ["config"]
         return Config._config(filepath=config_filepath)
 
-config = Config.config()
 
-"""
-config:
-  mqtt_broker:
-    host: 192.168.1.143
-    username: homeassistant
-    password: wu2veeJoi5ox5ooP8wai9ich0oothaepaeg5keteu4mahwui9iexai7uNufae1sa
-    discovery_prefix: homeassistant
-    state_prefix: hmd
-  gpio:
-    port: 1
-    address: 0x76
-"""
+config = Config.config()

@@ -16,18 +16,22 @@ help:
 # Or on Raspberry PI try export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 MODULE_VERSION=$(shell poetry run python3 -c 'import toml;print(toml.loads(open("pyproject.toml", "r").read())["tool"]["poetry"]["version"])' )
 MODULE_USER=aixnpanes
-MODULE_NAME=discoverable-garage-door
+MODULE_NAME=discoverable-tph-280
 MODULE_DIR=$(shell echo $(MODULE_NAME) | tr '-' '_')
 MODULE_TEST=$(MODULE_NAME)-test
 MODULE_TAG=$(shell echo "$(MODULE_NAME)" | tr '-' '_')
 MODULE_TAG_LATEST=$(shell echo $(MODULE_NAME) | tr '-' '_')
+PYTHON_VERSION=3.$(shell find /usr/bin/ /usr/local/bin -name 'python3.*' | sed -e '/-config/d' -e 's/.*python3.//'|sort -n -u|tail -1)
 
 clean: ## Cleans out stale wheels, generated tar files, .pyc and .pyo files
 	rm -fv dist/*.tar dist/*.whl
 	find . -iname '*.py[co]' -delete
 
-format: ## Runs 'black' on all our python source files
-	poetry run black $(MODULE_DIR)
+install_poetry:
+	poetry >/dev/null|| pip$(PYTHON_VERSION) install poetry black
+
+format: install_poetry ## Runs 'black' on all our python source files
+	poetry run black --line-length 79 $(MODULE_DIR)
 
 install_hooks: ## Install the git hooks
 	poetry run pre-commit install
