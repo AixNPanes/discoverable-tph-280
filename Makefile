@@ -21,10 +21,14 @@ MODULE_DIR=$(shell echo $(MODULE_NAME) | tr '-' '_')
 MODULE_TEST=$(MODULE_NAME)-test
 MODULE_TAG=$(shell echo "$(MODULE_NAME)" | tr '-' '_')
 MODULE_TAG_LATEST=$(shell echo $(MODULE_NAME) | tr '-' '_')
+PYTHON_VERSION=3.$(shell find /usr/bin/ /usr/local/bin -name 'python3.*' | sed -e '/-config/d' -e 's/.*python3.//'|sort -n -u|tail -1)
 
 clean: ## Cleans out stale wheels, generated tar files, .pyc and .pyo files
 	rm -fv dist/*.tar dist/*.whl
 	find . -iname '*.py[co]' -delete
+
+install_poetry:
+	poetry >/dev/null|| pip$(PYTHON_VERSION) install poetry black
 
 format: ## Runs 'black' on all our python source files
 	poetry run black $(MODULE_DIR)
