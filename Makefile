@@ -22,6 +22,7 @@ MODULE_TEST=$(MODULE_NAME)-test
 MODULE_TAG=$(shell echo "$(MODULE_NAME)" | tr '-' '_')
 MODULE_TAG_LATEST=$(shell echo $(MODULE_NAME) | tr '-' '_')
 PYTHON_VERSION=3.$(shell find /usr/bin/ /usr/local/bin -name 'python3.*' | sed -e '/-config/d' -e 's/.*python3.//'|sort -n -u|tail -1)
+SERVICE_NAME=tph_280
 
 clean: ## Cleans out stale wheels, generated tar files, .pyc and .pyo files
 	rm -fv dist/*.tar dist/*.whl
@@ -59,3 +60,12 @@ requirements.txt: wheel poetry.lock pyproject.toml Makefile ## Builds a requirem
 
 testing: ## Builds a local image for testing
 	docker buildx build -f Dockerfile.testing . --load -t $(MODULE_USER)/$(MODULE_TAG):$(MODULE_VERSION) -t $(MODULE_USER)/$(MODULE_TAG):latest
+
+install: ## Install wheel
+	sudo pip$(PYTHON_VERSION) install $(MODULE_NAME) --upgrade
+	[ -f /usr/local/bin/$(SERVICE_NAME).service ] || ( \
+		sudo cp $(SERVICE_NAME).service /etc/systemd/system/ && \
+		sudo chmod u+rx /etc/systemd/system/$(SERVICE_NAME).service && \
+		sudo systemctl daemon-reload && \
+		sudo systemctl start $(SERVICE_NAME) \
+		)
