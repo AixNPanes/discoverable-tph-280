@@ -1,0 +1,13 @@
+[Unit]
+Description=Raspberry PI discoverable tph bme280 service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=pi
+ExecStart=/usr/local/bin/python3.11 -m discoverable_tph_280
+
+[Install]
+WantedBy=multi-user.target

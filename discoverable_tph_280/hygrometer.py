@@ -1,13 +1,9 @@
 from typing import Optional
 from .util import logger
 
-from pahommqtt.client import Client, MQTTMessage
+from paho.mqtt.client import MQTTMessage
 from ha_mqtt_discoverable import Settings
-from discoverable_environmental_station_280.base import Units, GuageInfo, Guage
-
-
-class HumidityUnits(Units):
-    PERCENT = ("Percent", "%", lambda h: h)
+from .base import GuageInfo, Guage
 
 
 class HygrometerInfo(GuageInfo):
@@ -17,7 +13,6 @@ class HygrometerInfo(GuageInfo):
     name: str = "My Hygrometer"
     object_id: Optional[str] = "my-hygrometer"
     device_class: Optional[str] = "humidity"
-    units = HumidityUnits.PERCENT
     unique_id: Optional[str] = "my-hygrometer"
 
 
@@ -35,17 +30,16 @@ class Hygrometer(Guage):
         device_class="humidity",
     ):
         super(Hygrometer, cls).__init__(
-            mqtt=mqtt,
+            mqtt=Settings.MQTT,
             name=name,
             device_class=device_class,
             info_class=HygrometerInfo,
             callback=Hygrometer.command_callback,
         )
 
-    def set_units(cls, unit: str):
-        cls.units = HumidityUnits.units(unit)
-
     @staticmethod
-    def command_callback(client: Client, user_data, message: MQTTMessage):
+    def command_callback(
+        client: Settings.MQTT, user_data, message: MQTTMessage
+    ):
         callback_payload = message.payload.decode()
         logger.info(f"Hygrometer received {callback_payload} from HA")
