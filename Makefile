@@ -16,7 +16,7 @@ help:
 # Or on Raspberry PI try export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 MODULE_VERSION=$(shell poetry run python3 -c 'import toml;print(toml.loads(open("pyproject.toml", "r").read())["tool"]["poetry"]["version"])' )
 MODULE_USER=aixnpanes
-MODULE_NAME=discoverable-garage-door
+MODULE_NAME=discoverable-tph-280
 MODULE_DIR=$(shell echo $(MODULE_NAME) | tr '-' '_')
 MODULE_TEST=$(MODULE_NAME)-test
 MODULE_TAG=$(shell echo "$(MODULE_NAME)" | tr '-' '_')
