@@ -28,6 +28,8 @@ clean: ## Cleans out stale wheels, generated tar files, .pyc and .pyo files
 	rm -fv dist/*.tar dist/*.whl
 	find . -iname '*.py[co]' -delete
 
+all: install_hooks multiarch_image publish wheel ## Install all necessary items
+
 install_poetry:
 	poetry >/dev/null|| pip$(PYTHON_VERSION) install poetry black
 
