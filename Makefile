@@ -67,5 +67,5 @@ install: ## Install wheel
 		sudo cp $(SERVICE_NAME).service /etc/systemd/system/ && \
 		sudo chmod u+rx /etc/systemd/system/$(SERVICE_NAME).service && \
 		sudo systemctl daemon-reload && \
-		sudo systemctl start $(SERVICE_NAME) \
+		sudo systemctl restart $(SERVICE_NAME) \
 		)
