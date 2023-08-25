@@ -19,7 +19,7 @@ class BME_280:
         data = bme280.sample(cls.bus, cls.address)
         cls.temperature = data.temperature
         cls.pressure = data.pressure
-        cls.humidity = data.temperature
+        cls.humidity = data.humidity
 
     def __str__(cls):
         return f"port: {cls.port}, address: {cls.address}"
