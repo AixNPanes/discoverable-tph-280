@@ -25,12 +25,12 @@ class Hygrometer(Guage):
 
     def __init__(
         cls,
-        mqtt: Settings.MQTT,
+        mqtt_settings: Settings.MQTT,
         name: str = "Hygrometer",
         device_class="humidity",
     ):
         super(Hygrometer, cls).__init__(
-            mqtt=Settings.MQTT,
+            mqtt_settings=mqtt_settings,
             name=name,
             device_class=device_class,
             info_class=HygrometerInfo,

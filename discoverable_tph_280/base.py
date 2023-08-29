@@ -21,14 +21,15 @@ class GuageInfo(EntityInfo):
 class Guage(Subscriber[GuageInfo]):
     def __init__(
         cls,
-        mqtt: Settings.MQTT = None,
+        mqtt_settings: Settings.MQTT = None,
         name=None,
         device_class=None,
         info_class=None,
         callback=Callable,
     ):
+        print(f"type(mqtt_settings): {type(mqtt_settings)}")
         cls.info = info_class(name=name, device_class=device_class)
-        cls.settings = Settings(mqtt=Settings.MQTT, entity=cls.info)
+        cls.settings = Settings(mqtt=mqtt_settings, entity=cls.info)
         super(Guage, cls).__init__(cls.settings, command_callback=callback)
 
     def set_value(cls, value):

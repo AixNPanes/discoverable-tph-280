@@ -3,8 +3,9 @@ import logging
 import logging.config
 from typing import Optional
 
-from paho.mqtt.client import MQTTMessage, mqtt as MQTT
+from paho.mqtt.client import MQTTMessage
 from .base import GuageInfo, Guage
+from ha_mqtt_discoverable import Settings
 
 
 class BarometerInfo(GuageInfo):
@@ -25,10 +26,13 @@ class Barometer(Guage):
     value_name: str = "pressure"
 
     def __init__(
-        cls, mqtt: MQTT, name: str = "Barometer", device_class="pressure"
+        cls,
+        mqtt_settings: Settings.MQTT,
+        name: str = "Barometer",
+        device_class="pressure",
     ):
         super(Barometer, cls).__init__(
-            mqtt=mqtt,
+            mqtt_settings=mqtt_settings,
             name=name,
             device_class=device_class,
             info_class=BarometerInfo,
@@ -36,6 +40,8 @@ class Barometer(Guage):
         )
 
     @staticmethod
-    def command_callback(client: MQTT, user_data, message: MQTTMessage):
+    def command_callback(
+        client: Settings.MQTT, user_data, message: MQTTMessage
+    ):
         callback_payload = message.payload.decode()
         logging.info(f"Barometer received {callback_payload} from HA")

@@ -22,9 +22,12 @@ def main():
         state_prefix=config.mqtt_broker.state_prefix,
     )
 
-    thermometer = Thermometer(mqtt=mqtt_settings, name="My Thermometer")
-    barometer = Barometer(mqtt=mqtt_settings, name="My Barometer")
-    hygrometer = Hygrometer(mqtt=mqtt_settings, name="My Hygrometer")
+    print(mqtt_settings)
+    thermometer = Thermometer(
+        mqtt_settings=mqtt_settings, name="My Thermometer"
+    )
+    barometer = Barometer(mqtt_settings=mqtt_settings, name="My Barometer")
+    hygrometer = Hygrometer(mqtt_settings=mqtt_settings, name="My Hygrometer")
 
     thermometer.set_value(thermometer._entity.value)
     barometer.set_value(barometer._entity.value)
