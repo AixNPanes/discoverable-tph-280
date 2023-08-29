@@ -10,6 +10,8 @@
 - [Module configuration](#module-configuration)
   - [Specify location of the configuration file](#specify-location-of-the-configuration-file)
   - [Configuration parameters](#configuration-parameters)
+- [ChangeLog](#changelog)
+  - [0.1.6 - 2023-08-29](#016---2023-08-29)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -89,3 +91,9 @@ Where the parameters have the following meaning:
 - state_prefix: the state_prefix that the Home Assistant server will use to send state information to the module, this can be of your choosing as this configuration parameter is sent to the Home Assistant server during handshake so that the Home Assistant server knows which prefix to use and therefore there is no place to configure it on the Home Assistant Server
 - port: the i2c port number used to communicate with the BME280 chip, normally 1
 - address: the device address on the i2c bus used to communicate with the BME280 chip, normally 0x76
+
+## ChangeLog
+
+### 0.1.6 - 2023-08-29
+- thermometer.py change import from ha_hqtt_discoverable to ha_mqtt_discoverable
+- base.py, barometer.py, hygrometer.py, thermometer.py, __main__.py change constructor parameter from mqtt to mqtt_settings

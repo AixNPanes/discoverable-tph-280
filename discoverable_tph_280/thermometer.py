@@ -27,12 +27,12 @@ class Thermometer(Guage):
 
     def __init__(
         cls,
-        mqtt: Settings.MQTT = None,
+        mqtt_settings: Settings.MQTT = None,
         name: str = "Thermometer",
         device_class="temperature",
     ):
         super(Thermometer, cls).__init__(
-            mqtt=Settings.MQTT,
+            mqtt_settings=mqtt_settings,
             name=name,
             device_class=device_class,
             info_class=ThermometerInfo,
