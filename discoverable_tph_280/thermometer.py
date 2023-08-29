@@ -4,7 +4,7 @@ import logging.config
 from typing import Optional
 
 from paho.mqtt.client import MQTTMessage
-from ha_hqtt_discoverable import Settings
+from ha_mqtt_discoverable import Settings
 from .base import GuageInfo, Guage
 
 
