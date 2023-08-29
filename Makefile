@@ -28,7 +28,7 @@ clean: ## Cleans out stale wheels, generated tar files, .pyc and .pyo files
 	rm -fv dist/*.tar dist/*.whl
 	find . -iname '*.py[co]' -delete
 
-all: install_hooks multiarch_image publish wheel ## Install all necessary items
+all: install_hooks multiarch_image toc publish wheel ## Install all necessary items
 
 install_poetry:
 	poetry >/dev/null|| pip$(PYTHON_VERSION) install poetry black
@@ -39,6 +39,9 @@ format: install_poetry ## Runs 'black' on all our python source files
 install_hooks: ## Install the git hooks
 	poetry run pre-commit install
 
+toc: *.md ## Runs 'doctoc' to format the Table of Contents for the README files
+	doctoc $?
+
 wheel: clean format ## Builds a wheel for our modules. 'poetry' bakes the dependencies into the wheel metadata.
 	poetry build
 
@@ -47,6 +50,7 @@ local: wheel requirements.txt ## Makes a docker image for only the architecture 
 	docker tag $(MODULE_USER)/$(MODULE_TAG):$(MODULE_VERSION) $(MODULE_USER)/$(MODULE_TAG):latest
 
 multiarch_image: wheel ## Makes a multi-architecture docker image for linux/arm64, linux/amd64 and linux/arm/v7 and pushes it to dockerhub, if this fails try docker buildx create --name mybuilder; docker buildx use mybuilder; docker buildx inspect --bootstrap ALSO docker login
+	docker system prune --force
 	docker buildx build --no-cache --build-arg application_version=${MODULE_VERSION} --platform linux/arm64,linux/amd64,linux/arm/v7 --push -t $(MODULE_USER)/$(MODULE_TAG):$(MODULE_VERSION) -t $(MODULE_USER)/$(MODULE_TAG):latest .
 	make local
 

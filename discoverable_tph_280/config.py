@@ -40,7 +40,8 @@ class Config(YamlModel):
         elif filepath:
             if isfile(filepath) and exists(filepath):
                 config = Config._readfile(filepath)
-            raise FileNotFoundError(filepath)
+            else:
+                raise FileNotFoundError(filepath)
         else:
             config_file = abspath(".config.yaml")
             if isfile(config_file) and exists(config_file):

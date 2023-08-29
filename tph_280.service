@@ -6,7 +6,8 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=pi
+User=root
+Environment="config=/etc/discoverable-tph-280/discoverable-tph-280.config"
 ExecStart=/usr/local/bin/python3.11 -m discoverable_tph_280
 
 [Install]
