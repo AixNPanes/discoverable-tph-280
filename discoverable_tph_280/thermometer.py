@@ -5,10 +5,10 @@ from typing import Optional
 
 from paho.mqtt.client import MQTTMessage
 from ha_mqtt_discoverable import Settings
-from .base import GuageInfo, Guage
+from .base import GaugeInfo, Gauge
 
 
-class ThermometerInfo(GuageInfo):
+class ThermometerInfo(GaugeInfo):
     """Special information for Thermometer"""
 
     component: str = "sensor"
@@ -18,7 +18,7 @@ class ThermometerInfo(GuageInfo):
     unique_id: Optional[str] = "my-thermometer"
 
 
-class Thermometer(Guage):
+class Thermometer(Gauge):
     """Implements an MQTT thermometer:
     https://www.home-assistant.io/integrations/sensor.mqtt/
     """

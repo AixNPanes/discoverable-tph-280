@@ -12,6 +12,7 @@
   - [Configuration parameters](#configuration-parameters)
 - [ChangeLog](#changelog)
   - [0.1.6 - 2023-08-29](#016---2023-08-29)
+  - [0.1.7 - 2023-08-30](#017---2023-08-30)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -97,3 +98,7 @@ Where the parameters have the following meaning:
 ### 0.1.6 - 2023-08-29
 - thermometer.py change import from ha_hqtt_discoverable to ha_mqtt_discoverable
 - base.py, barometer.py, hygrometer.py, thermometer.py, __main__.py change constructor parameter from mqtt to mqtt_settings
+
+### 0.1.7 - 2023-08-30
+- add pytest tests
+- rename guage->gauge, Guage->Gauge, GuageInfo->GaugeInfo

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "discoverable-tph-280"
-version = "0.1.6"
+version = "0.1.7"
 description = "ha-mqtt-discoverable project to get temperature, pressure and humidity from a bme280 chip"
 authors = ["Tim Daley <timdaley@earthling.net>"]
 license = "Apache 2.0"

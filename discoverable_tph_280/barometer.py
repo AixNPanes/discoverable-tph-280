@@ -4,11 +4,11 @@ import logging.config
 from typing import Optional
 
 from paho.mqtt.client import MQTTMessage
-from .base import GuageInfo, Guage
+from .base import GaugeInfo, Gauge
 from ha_mqtt_discoverable import Settings
 
 
-class BarometerInfo(GuageInfo):
+class BarometerInfo(GaugeInfo):
     """Special information for Barometer"""
 
     component: str = "sensor"
@@ -18,7 +18,7 @@ class BarometerInfo(GuageInfo):
     unique_id: Optional[str] = "my-barometer"
 
 
-class Barometer(Guage):
+class Barometer(Gauge):
     """Implements an MQTT barometer:
     https://www.home-assistant.io/integrations/sensor.mqtt/
     """

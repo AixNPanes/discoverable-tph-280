@@ -3,10 +3,10 @@ from .util import logger
 
 from paho.mqtt.client import MQTTMessage
 from ha_mqtt_discoverable import Settings
-from .base import GuageInfo, Guage
+from .base import GaugeInfo, Gauge
 
 
-class HygrometerInfo(GuageInfo):
+class HygrometerInfo(GaugeInfo):
     """Special information for Hygrometer"""
 
     component: str = "sensor"
@@ -16,7 +16,7 @@ class HygrometerInfo(GuageInfo):
     unique_id: Optional[str] = "my-hygrometer"
 
 
-class Hygrometer(Guage):
+class Hygrometer(Gauge):
     """Implements an MQTT hygrometer:
     https://www.home-assistant.io/integrations/sensor.mqtt/
     """
