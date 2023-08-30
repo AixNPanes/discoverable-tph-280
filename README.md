@@ -13,6 +13,7 @@
 - [ChangeLog](#changelog)
   - [0.1.6 - 2023-08-29](#016---2023-08-29)
   - [0.1.7 - 2023-08-30](#017---2023-08-30)
+  - [0.1.8 - 2023-08-30](#018---2023-08-30)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -102,3 +103,6 @@ Where the parameters have the following meaning:
 ### 0.1.7 - 2023-08-30
 - add pytest tests
 - rename guage->gauge, Guage->Gauge, GuageInfo->GaugeInfo
+
+### 0.1.8 - 2023-08-30
+- fix humidity precision

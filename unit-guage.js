@@ -61,7 +61,7 @@ function transformPressure(value, units) {
 }
 
 function transformHumidity(value, units) {
-  return value;
+  return Math.round(parseFloat(value), 1).toFixed(1);
 }
 
 const colorTable = {
@@ -79,7 +79,7 @@ const colorTable = {
     "MBAR": [950.0, 1050.00],
     "INHG": [28.053, 31.0],
     "MMHG": [712.55, 787.56],
-    "PSI": [13.77, 15.22]  
+    "PSI": [13.77, 15.22]
   },
   'humidity': {
     "%": [30.0, 50.0]
@@ -280,7 +280,7 @@ class UnitGauge extends HTMLElement {
           }
           .humidity-dropdown-content a:hover {
             background-color: #f1f1f1;
-          }          
+          }
           .humidity-show {
             display: block;
           }
@@ -304,7 +304,7 @@ class UnitGauge extends HTMLElement {
           .show {
             display: block;
           }
-        </style>        
+        </style>
         <h1 class="type-custom-unit-gauge-header">Environment</h1>
         <div class="unit-gauge-div">
           <span class="unit-gauge-temperature-span">
@@ -418,7 +418,7 @@ class UnitGauge extends HTMLElement {
       this.unitGaugeHumidityTextValue = this.unitGaugeHumidityTextSpan.querySelector(".unit-gauge-humidity-text-value");
       this.unitGaugeHumidityTextUnits = this.unitGaugeHumidityTextSpan.querySelector(".unit-gauge-humidity-text-units");
       this.unitGaugeHumidityUnitsDropdown = this.unitGaugeHumiditySpan.querySelector('humidityDropdown');
-      
+
       this.setAttribute('class', 'unit-gauge-card');
       this.unitGaugeTemperatureText.addEventListener('click', () => {
         this.unitGaugeTemperatureUnitsDropdown.classList.toggle('temperature-dropdown-content');
@@ -432,7 +432,7 @@ class UnitGauge extends HTMLElement {
       this.temperatureUnitsId = this.config.temperature_units;
       this.pressureUnitsId = this.config.pressure_units;
       this.humidityUnitsId = this.config.humidity_units;
-  
+
       this.label = hass.states[this.labelId];
       this.temperatureLabel = hass.states[this.temperatureLabelId];
       this.pressureLabel = hass.states[this.pressureLabelId];
@@ -449,8 +449,8 @@ class UnitGauge extends HTMLElement {
       this.temperatureUnitsList =  this.temperatureUnits.attributes.options;
       this.pressureUnitsList =  this.pressureUnits.attributes.options;
       this.humidityUnitsList =  this.humidityUnits.attributes.options;
-  
-      this.labelStr = this.label ? this.label.state : "unavailable";  
+
+      this.labelStr = this.label ? this.label.state : "unavailable";
       this.temperatureLabelStr = this.temperatureLabel ? this.temperatureLabel.state : "unavailable";
       this.pressureLabelStr = this.pressureLabel ? this.pressureLabel.state : "unavailable";
       this.humidityLabelStr = this.humidityLabel ? humidityLabel.state : "unavailable";
@@ -563,7 +563,7 @@ class UnitGauge extends HTMLElement {
             socket.addEventListener("close", () => {
               closePopup();
             });
-            }      
+            }
           function getSelectedTemperatureUnits(entity_id) {
             var popup = window.open('', "PopupWindow");
             var select = popup.document.getElementById("${html_id}");
