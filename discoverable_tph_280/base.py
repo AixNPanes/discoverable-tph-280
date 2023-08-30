@@ -19,6 +19,8 @@ class GuageInfo(EntityInfo):
 
 
 class Guage(Subscriber[GuageInfo]):
+    value_name: str = "undefined"
+
     def __init__(
         cls,
         mqtt_settings: Settings.MQTT = None,
@@ -27,7 +29,6 @@ class Guage(Subscriber[GuageInfo]):
         info_class=None,
         callback=Callable,
     ):
-        print(f"type(mqtt_settings): {type(mqtt_settings)}")
         cls.info = info_class(name=name, device_class=device_class)
         cls.settings = Settings(mqtt=mqtt_settings, entity=cls.info)
         super(Guage, cls).__init__(cls.settings, command_callback=callback)
@@ -40,9 +41,8 @@ class Guage(Subscriber[GuageInfo]):
         return cls.value
 
     def set_attributes(cls, name, value):
-        logger.debug(f"sett_attributes {name}, {value}")
+        logger.debug(f"set_attributes {name}, {value}")
         cls._entity.value = value
-        print(cls.value_name, cls._entity.value)
         super(Guage, cls).set_attributes(
             attributes={cls.value_name: cls._entity.value}
         )
